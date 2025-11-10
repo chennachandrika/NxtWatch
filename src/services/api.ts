@@ -68,3 +68,33 @@ export const fetchVideosAPI = async (searchQuery: string = '') => {
 
   return response.json()
 }
+
+export const fetchTrendingVideosAPI = async () => {
+  const token = getJwtToken()
+  const baseUrl = getApiUrl()
+  
+  const headers: HeadersInit = {
+    'Accept': 'application/json',
+  }
+
+  // Add Authorization header with Bearer token
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`
+  }
+
+  const response = await fetch(`${baseUrl}/videos/trending`, {
+    method: 'GET',
+    headers,
+  })
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      // Clear token if unauthorized
+      localStorage.removeItem('jwt_token')
+      throw new Error('Unauthorized. Please login again.')
+    }
+    throw new Error('Failed to fetch trending videos')
+  }
+
+  return response.json()
+}
