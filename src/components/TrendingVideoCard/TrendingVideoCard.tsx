@@ -18,7 +18,7 @@ const TrendingVideoCard = ({ video }: TrendingVideoCardProps) => {
       <div className="flex gap-4">
         {/* Thumbnail - Left Side */}
         <div className="flex-shrink-0">
-          <div className="relative w-64 h-36 rounded-lg overflow-hidden">
+          <div className="relative w-84 h-56 rounded-lg overflow-hidden">
             <img
               src={video.thumbnail_url}
               alt={video.title}
