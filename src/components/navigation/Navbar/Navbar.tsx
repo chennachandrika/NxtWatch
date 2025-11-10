@@ -2,6 +2,7 @@ import { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate } from "react-router-dom";
 import authModel from "../../../stores/AuthModel";
+import userModel from "../../../stores/UserModel";
 import themeModel from "../../../stores/ThemeModel";
 import LogoutConfirmationDialog from "../../auth/LogoutConfirmationDialog";
 
@@ -21,6 +22,9 @@ const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
   const handleLogoutClick = () => {
     setShowLogoutDialog(true);
   };
+
+  const userInitials = userModel.getInitials();
+  const username = userModel.user?.username || "User";
 
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
@@ -55,7 +59,7 @@ const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <button
               onClick={themeModel.toggleTheme}
               className="p-2 rounded-lg outline-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -71,6 +75,23 @@ const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
             >
               Logout
             </button>
+
+            {/* User Profile - At the end */}
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold text-sm">
+                {userInitials}
+              </div>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                {username}
+              </span>
+            </div>
+
+            {/* Mobile Profile Icon */}
+            <div className="sm:hidden">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold text-sm">
+                {userInitials}
+              </div>
+            </div>
           </div>
         </div>
       </div>
