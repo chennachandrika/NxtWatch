@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom'
 import Login from '../components/Login/Login'
-import Home from '../components/Home/Home'
-import Trending from '../components/Trending/Trending'
+import HomePage from '../pages/HomePage'
+import TrendingPage from '../pages/TrendingPage'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute'
 
 export const appRoutes = [
@@ -13,7 +13,7 @@ export const appRoutes = [
     path: '/',
     element: (
       <ProtectedRoute>
-        <Home />
+        <HomePage />
       </ProtectedRoute>
     ),
   },
@@ -21,7 +21,7 @@ export const appRoutes = [
     path: '/trending',
     element: (
       <ProtectedRoute>
-        <Trending />
+        <TrendingPage />
       </ProtectedRoute>
     ),
   },
