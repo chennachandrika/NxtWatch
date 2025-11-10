@@ -1,59 +1,61 @@
 import { Navigate } from 'react-router-dom'
+import type { ReactElement } from 'react'
 import Login from '../components/auth/Login'
 import HomePage from '../pages/HomePage'
 import TrendingPage from '../pages/TrendingPage'
 import GamingPage from '../pages/GamingPage'
 import SavedVideosPage from '../pages/SavedVideosPage'
 import VideoDetailsPage from '../pages/VideoDetailsPage'
-import ProtectedRoute from '../components/routes/ProtectedRoute'
+import RouteGuard from '../components/routes/RouteGuard'
 
-export const appRoutes = [
+export interface AppRoute {
+  path: string
+  element: ReactElement
+  protected?: boolean // true = requires auth, false/undefined = public route
+}
+
+export const appRoutes: AppRoute[] = [
   {
     path: '/login',
     element: <Login />,
+    protected: false, // Public route - accessible when not authenticated
   },
   {
     path: '/',
-    element: (
-      <ProtectedRoute>
-        <HomePage />
-      </ProtectedRoute>
-    ),
+    element: <HomePage />,
+    protected: true, // Requires authentication
   },
   {
     path: '/trending',
-    element: (
-      <ProtectedRoute>
-        <TrendingPage />
-      </ProtectedRoute>
-    ),
+    element: <TrendingPage />,
+    protected: true,
   },
   {
     path: '/gaming',
-    element: (
-      <ProtectedRoute>
-        <GamingPage />
-      </ProtectedRoute>
-    ),
+    element: <GamingPage />,
+    protected: true,
   },
   {
     path: '/saved',
-    element: (
-      <ProtectedRoute>
-        <SavedVideosPage />
-      </ProtectedRoute>
-    ),
+    element: <SavedVideosPage />,
+    protected: true,
   },
   {
     path: '/videos/:id',
-    element: (
-      <ProtectedRoute>
-        <VideoDetailsPage />
-      </ProtectedRoute>
-    ),
+    element: <VideoDetailsPage />,
+    protected: true,
   },
   {
     path: '*',
     element: <Navigate to="/" replace />,
   },
 ]
+
+// Helper function to wrap routes with RouteGuard
+export const renderRoute = (route: AppRoute) => {
+  return (
+    <RouteGuard protected={route.protected}>
+      {route.element}
+    </RouteGuard>
+  )
+}

@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react'
 import { observer } from 'mobx-react-lite'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import authStore from '../../../stores/AuthModel'
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
@@ -8,6 +8,7 @@ import themeStore from '../../../stores/ThemeModel'
 
 const Login = observer(() => {
   const navigate = useNavigate()
+  const location = useLocation()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -20,7 +21,10 @@ const Login = observer(() => {
     const result = await authStore.login({ username, password })
     
     if (result.success) {
-      navigate('/')
+      // Redirect to the page user was trying to access, or home
+      const state = location.state as { from?: { pathname: string } } | null
+      const from = state?.from
+      navigate(from?.pathname || '/', { replace: true })
     }
   }
 
