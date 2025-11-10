@@ -18,7 +18,7 @@ const Sidebar = observer(() => {
   const [activeItem, setActiveItem] = useState('home')
 
   return (
-    <aside className="hidden lg:block w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 min-h-[calc(100vh-4rem)]">
+    <aside className="hidden lg:block w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto">
       <nav className="p-4 space-y-2">
         {sidebarItems.map((item) => (
           <button
