@@ -15,9 +15,10 @@ class SavedVideosModel {
     if (saved) {
       try {
         this.savedVideos = JSON.parse(saved)
-      } catch (error) {
-        console.error('Failed to parse saved videos', error)
+      } catch {
+        // Silently handle parse errors - reset to empty array
         this.savedVideos = []
+        localStorage.removeItem('saved_videos')
       }
     }
   }

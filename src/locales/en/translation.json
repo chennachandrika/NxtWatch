@@ -14,7 +14,10 @@
     "views": "views",
     "subscribers": "subscribers",
     "published": "Published",
-    "description": "Description"
+    "description": "Description",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "tryAgainLater": "Try again later"
   },
   "navbar": {
     "title": "NxtWatch",

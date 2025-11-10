@@ -1,8 +1,10 @@
-import { useState, FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { observer } from 'mobx-react-lite'
+import { useTranslation } from 'react-i18next'
 import videoModel from '../../../../stores/VideoModel'
 
 const SearchBar = observer(() => {
+  const { t } = useTranslation()
   const [searchQuery, setSearchQuery] = useState('')
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -17,8 +19,9 @@ const SearchBar = observer(() => {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search"
+          placeholder={t('home.searchPlaceholder')}
           className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-black dark:text-white"
+          aria-label={t('common.search')}
         />
         <button
           type="submit"

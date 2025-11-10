@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite'
+import { useTranslation } from 'react-i18next'
 import VideoCard from '../VideoCard'
 import TrendingVideoCard from '../TrendingVideoCard'
 import GamingVideoCard from '../GamingVideoCard'
@@ -13,6 +14,8 @@ interface VideoListProps {
 }
 
 const VideoList = observer(({ model = videoModel, isTrending = false, isGaming = false }: VideoListProps) => {
+  const { t } = useTranslation()
+
   if (model.isLoading) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -39,21 +42,27 @@ const VideoList = observer(({ model = videoModel, isTrending = false, isGaming =
           }}
           className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
         >
-          Retry
+          {t('common.retry')}
         </button>
       </div>
     )
   }
 
   if (model.videos.length === 0) {
+    const emptyMessage = isTrending 
+      ? t('trending.noVideos')
+      : isGaming 
+      ? t('gaming.noVideos')
+      : t('home.noVideos')
+    
     return (
       <div className="text-center py-20">
         <div className="text-6xl mb-4">📺</div>
         <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
-          No videos found
+          {emptyMessage}
         </h3>
         <p className="text-gray-600 dark:text-gray-400">
-          Try again later
+          {t('common.tryAgainLater')}
         </p>
       </div>
     )

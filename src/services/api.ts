@@ -1,6 +1,5 @@
 
 
-
 // API Base URL
 const API_BASE_URL = 'https://apis.ccbp.in'
 
@@ -19,6 +18,49 @@ const getApiUrl = () => {
   return API_BASE_URL
 }
 
+// Create authenticated API request helper
+const createApiRequest = async (
+  endpoint: string,
+  options: RequestInit = {},
+  errorMessage: string = 'Request failed'
+): Promise<Response> => {
+  const token = getJwtToken()
+  const baseUrl = getApiUrl()
+  
+  const headers: HeadersInit = {
+    'Accept': 'application/json',
+    ...options.headers,
+  }
+
+  // Add Authorization header with Bearer token
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`
+  }
+
+  const response = await fetch(`${baseUrl}${endpoint}`, {
+    ...options,
+    headers,
+  })
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      // Clear token if unauthorized
+      localStorage.removeItem('jwt_token')
+      throw new Error('Unauthorized. Please login again.')
+    }
+    
+    // Try to parse error message from response
+    try {
+      const errorData = await response.json()
+      throw new Error(errorData.error_msg || errorMessage)
+    } catch {
+      throw new Error(errorMessage)
+    }
+  }
+
+  return response
+}
+
 export const loginAPI = async (username: string, password: string) => {
   const baseUrl = getApiUrl()
   const response = await fetch(`${baseUrl}/login`, {
@@ -31,130 +73,53 @@ export const loginAPI = async (username: string, password: string) => {
   })
 
   if (!response.ok) {
-    const errorData = await response.json()
-    throw new Error(errorData.error_msg || 'Login failed')
+    try {
+      const errorData = await response.json()
+      throw new Error(errorData.error_msg || 'Login failed')
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error
+      }
+      throw new Error('Login failed')
+    }
   }
 
   return response.json()
 }
 
 export const fetchVideosAPI = async (searchQuery: string = '') => {
-  const token = getJwtToken()
-  const baseUrl = getApiUrl()
   const queryParam = searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ''
-  
-  const headers: HeadersInit = {
-    'Accept': 'application/json',
-  }
-
-  // Add Authorization header with Bearer token
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`
-  }
-
-  const response = await fetch(`${baseUrl}/videos/all${queryParam}`, {
-    method: 'GET',
-    headers,
-  })
-
-  if (!response.ok) {
-    if (response.status === 401) {
-      // Clear token if unauthorized
-      localStorage.removeItem('jwt_token')
-      throw new Error('Unauthorized. Please login again.')
-    }
-    throw new Error('Failed to fetch videos')
-  }
-
+  const response = await createApiRequest(
+    `/videos/all${queryParam}`,
+    { method: 'GET' },
+    'Failed to fetch videos'
+  )
   return response.json()
 }
 
 export const fetchTrendingVideosAPI = async () => {
-  const token = getJwtToken()
-  const baseUrl = getApiUrl()
-  
-  const headers: HeadersInit = {
-    'Accept': 'application/json',
-  }
-
-  // Add Authorization header with Bearer token
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`
-  }
-
-  const response = await fetch(`${baseUrl}/videos/trending`, {
-    method: 'GET',
-    headers,
-  })
-
-  if (!response.ok) {
-    if (response.status === 401) {
-      // Clear token if unauthorized
-      localStorage.removeItem('jwt_token')
-      throw new Error('Unauthorized. Please login again.')
-    }
-    throw new Error('Failed to fetch trending videos')
-  }
-
+  const response = await createApiRequest(
+    '/videos/trending',
+    { method: 'GET' },
+    'Failed to fetch trending videos'
+  )
   return response.json()
 }
 
 export const fetchGamingVideosAPI = async () => {
-  const token = getJwtToken()
-  const baseUrl = getApiUrl()
-  
-  const headers: HeadersInit = {
-    'Accept': 'application/json',
-  }
-
-  // Add Authorization header with Bearer token
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`
-  }
-
-  const response = await fetch(`${baseUrl}/videos/gaming`, {
-    method: 'GET',
-    headers,
-  })
-
-  if (!response.ok) {
-    if (response.status === 401) {
-      // Clear token if unauthorized
-      localStorage.removeItem('jwt_token')
-      throw new Error('Unauthorized. Please login again.')
-    }
-    throw new Error('Failed to fetch gaming videos')
-  }
-
+  const response = await createApiRequest(
+    '/videos/gaming',
+    { method: 'GET' },
+    'Failed to fetch gaming videos'
+  )
   return response.json()
 }
 
 export const fetchVideoDetailsAPI = async (videoId: string) => {
-  const token = getJwtToken()
-  const baseUrl = getApiUrl()
-  
-  const headers: HeadersInit = {
-    'Accept': 'application/json',
-  }
-
-  // Add Authorization header with Bearer token
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`
-  }
-
-  const response = await fetch(`${baseUrl}/videos/${videoId}`, {
-    method: 'GET',
-    headers,
-  })
-
-  if (!response.ok) {
-    if (response.status === 401) {
-      // Clear token if unauthorized
-      localStorage.removeItem('jwt_token')
-      throw new Error('Unauthorized. Please login again.')
-    }
-    throw new Error('Failed to fetch video details')
-  }
-
+  const response = await createApiRequest(
+    `/videos/${videoId}`,
+    { method: 'GET' },
+    'Failed to fetch video details'
+  )
   return response.json()
 }

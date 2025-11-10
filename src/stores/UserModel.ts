@@ -20,8 +20,10 @@ class UserModel {
     if (storedUser) {
       try {
         this.user = JSON.parse(storedUser)
-      } catch (error) {
-        console.error('Failed to parse user info from storage', error)
+      } catch {
+        // Silently handle parse errors - clear invalid data
+        this.user = null
+        localStorage.removeItem('user_info')
       }
     }
   }

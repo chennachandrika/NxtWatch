@@ -1,4 +1,5 @@
-import { useState, FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { observer } from 'mobx-react-lite'
 import { useNavigate, useLocation } from 'react-router-dom'
 import authStore from '../../../stores/AuthModel'
@@ -9,6 +10,7 @@ import themeStore from '../../../stores/ThemeModel'
 const Login = observer(() => {
   const navigate = useNavigate()
   const location = useLocation()
+  const { t } = useTranslation()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -34,7 +36,7 @@ const Login = observer(() => {
         <div className="bg-gray-50 dark:bg-gray-900 p-8 rounded-lg shadow-lg border border-gray-200 dark:border-gray-800">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
-              NxtWatch
+              {t('navbar.title')}
             </h1>
             <button
               onClick={themeStore.toggleTheme}
@@ -47,22 +49,22 @@ const Login = observer(() => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
-              label="USERNAME"
+              label={t('auth.username').toUpperCase()}
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter username"
+              placeholder={t('auth.username')}
               required
               autoComplete="username"
             />
 
             <div className="relative">
               <Input
-                label="PASSWORD"
+                label={t('auth.password').toUpperCase()}
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
+                placeholder={t('auth.password')}
                 required
                 autoComplete="current-password"
               />
@@ -70,7 +72,7 @@ const Login = observer(() => {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-1 top-7 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                aria-label={showPassword ? t('common.hidePassword') : t('common.showPassword')}
               >
                 {showPassword ? '👁️' : '👁️‍🗨️'}
               </button>
@@ -89,7 +91,7 @@ const Login = observer(() => {
               isLoading={authStore.isLoading}
               className="w-full"
             >
-              Login
+              {t('auth.loginButton')}
             </Button>
           </form>
         </div>
