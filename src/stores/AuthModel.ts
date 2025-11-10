@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 import { loginAPI } from '../services/api'
+import userModel from './UserModel'
 
 interface LoginCredentials {
   username: string
@@ -22,6 +23,8 @@ class AuthModel{
     if (token) {
       this.jwtToken = token
       this.isAuthenticated = true
+      // Load user info if available
+      userModel.loadUserFromStorage()
     }
   }
 
@@ -37,6 +40,12 @@ class AuthModel{
         this.isAuthenticated = true
         this.isLoading = false
         localStorage.setItem('jwt_token', data.jwt_token)
+        
+        // Store user info in UserModel
+        userModel.setUser({
+          username: credentials.username,
+          name: credentials.username,
+        })
       })
       return { success: true }
     } catch (error) {
@@ -55,6 +64,8 @@ class AuthModel{
     this.jwtToken = ''
     this.errorMessage = ''
     localStorage.removeItem('jwt_token')
+    // Clear user info
+    userModel.clearUser()
   }
 
   clearError = () => {
