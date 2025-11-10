@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import AppLayout from '../components/AppLayout/AppLayout'
+import AppLayout from '../components/Layouts/AppLayout'
 import VideoList from '../components/VideoList/VideoList'
 import savedVideosModel from '../stores/SavedVideosModel'
 

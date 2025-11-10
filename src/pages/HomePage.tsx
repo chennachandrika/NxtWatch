@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
-import AppLayout from '../components/AppLayout/AppLayout'
+import AppLayout from '../components/Layouts/AppLayout'
 import SearchBar from '../components/SearchBar/SearchBar'
 import VideoList from '../components/VideoList/VideoList'
 import videoModel from '../stores/VideoModel'

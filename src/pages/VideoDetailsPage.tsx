@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
 import { useParams, useNavigate } from 'react-router-dom'
-import AppLayout from '../components/AppLayout/AppLayout'
+import AppLayout from '../components/Layouts/AppLayout'
 import VideoPlayer from '../components/VideoPlayer/VideoPlayer'
 import VideoDetailsContent from '../components/VideoDetailsContent/VideoDetailsContent'
 import videoDetailsModel from '../stores/VideoDetailsModel'
