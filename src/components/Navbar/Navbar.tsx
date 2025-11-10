@@ -5,9 +5,12 @@ import authModel from '../../stores/AuthModel'
 import userModel from '../../stores/UserModel'
 import themeModel from '../../stores/ThemeModel'
 
-const Navbar = observer(() => {
+interface NavbarProps {
+  onMenuToggle: () => void
+}
+
+const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
   const navigate = useNavigate()
-  const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [showProfileMenu, setShowProfileMenu] = useState(false)
 
   const handleLogout = () => {
@@ -27,7 +30,7 @@ const Navbar = observer(() => {
           {/* Logo and Menu Button */}
           <div className="flex items-center gap-4">
             <button
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              onClick={onMenuToggle}
               className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
               aria-label="Toggle menu"
             >
@@ -123,20 +126,6 @@ const Navbar = observer(() => {
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {showMobileMenu && (
-        <div className="lg:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-          <div className="px-4 py-3 space-y-2">
-            <button
-              onClick={handleLogout}
-              className="w-full text-left px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Mobile Profile Menu */}
       {showProfileMenu && (
