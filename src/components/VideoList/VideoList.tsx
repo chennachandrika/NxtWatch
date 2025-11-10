@@ -1,15 +1,18 @@
 import { observer } from 'mobx-react-lite'
 import VideoCard from '../VideoCard/VideoCard'
 import TrendingVideoCard from '../TrendingVideoCard/TrendingVideoCard'
+import GamingVideoCard from '../GamingVideoCard/GamingVideoCard'
 import videoModel from '../../stores/VideoModel'
 import trendingModel from '../../stores/TrendingModel'
+import gamingModel from '../../stores/GamingModel'
 
 interface VideoListProps {
-  model?: typeof videoModel | typeof trendingModel
+  model?: typeof videoModel | typeof trendingModel | typeof gamingModel
   isTrending?: boolean
+  isGaming?: boolean
 }
 
-const VideoList = observer(({ model = videoModel, isTrending = false }: VideoListProps) => {
+const VideoList = observer(({ model = videoModel, isTrending = false, isGaming = false }: VideoListProps) => {
   if (model.isLoading) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -30,6 +33,8 @@ const VideoList = observer(({ model = videoModel, isTrending = false }: VideoLis
               model.fetchVideos(model.searchQuery || '')
             } else if ('fetchTrendingVideos' in model) {
               model.fetchTrendingVideos()
+            } else if ('fetchGamingVideos' in model) {
+              model.fetchGamingVideos()
             }
           }}
           className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
@@ -54,7 +59,7 @@ const VideoList = observer(({ model = videoModel, isTrending = false }: VideoLis
     )
   }
 
-  // Use horizontal layout for trending, grid layout for home
+  // Use horizontal layout for trending
   if (isTrending) {
     return (
       <div className="space-y-0">
@@ -65,6 +70,18 @@ const VideoList = observer(({ model = videoModel, isTrending = false }: VideoLis
     )
   }
 
+  // Use gaming cards for gaming page
+  if (isGaming) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {model.videos.map((video) => (
+          <GamingVideoCard key={video.id} video={video} />
+        ))}
+      </div>
+    )
+  }
+
+  // Default grid layout for home
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       {model.videos.map((video) => (

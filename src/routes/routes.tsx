@@ -2,6 +2,7 @@ import { Navigate } from 'react-router-dom'
 import Login from '../components/Login/Login'
 import HomePage from '../pages/HomePage'
 import TrendingPage from '../pages/TrendingPage'
+import GamingPage from '../pages/GamingPage'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute'
 
 export const appRoutes = [
@@ -22,6 +23,14 @@ export const appRoutes = [
     element: (
       <ProtectedRoute>
         <TrendingPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/gaming',
+    element: (
+      <ProtectedRoute>
+        <GamingPage />
       </ProtectedRoute>
     ),
   },
