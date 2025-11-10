@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authModel from "../../stores/AuthModel";
 import themeModel from "../../stores/ThemeModel";
 import LogoutConfirmationDialog from "../common/LogoutConfirmationDialog";
@@ -47,10 +47,11 @@ const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
                 />
               </svg>
             </button>
-
-            <h1 className=" text-xl font-bold text-gray-800 dark:text-white">
-              NxtWatch
-            </h1>
+            <Link to="/">
+              <h1 className=" text-xl font-bold text-gray-800 dark:text-white">
+                NxtWatch
+              </h1>
+            </Link>
           </div>
 
           {/* Actions */}
