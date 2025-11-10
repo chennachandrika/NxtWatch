@@ -17,8 +17,8 @@ const TrendingVideoCard = ({ video }: TrendingVideoCardProps) => {
     <div className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors mb-4 p-2" onClick={handleClick}>
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
         {/* Thumbnail - Top on mobile, Left on desktop */}
-        <div className="shrink-0 w-full sm:w-64">
-          <div className="relative w-full aspect-video sm:w-64 sm:h-36 rounded-lg overflow-hidden">
+        <div className="shrink-0 w-full sm:w-84">
+          <div className="relative w-full aspect-square sm:w-84 sm:h-52 rounded-lg overflow-hidden">
             <img
               src={video.thumbnail_url}
               alt={video.title}
