@@ -30,7 +30,7 @@ const LogoutConfirmationDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-white dark:bg-gray-800">
         <DialogHeader>
-          <DialogTitle className="text-gray-900 dark:text-white">
+          <DialogTitle id="dialog-title" className="text-gray-900 dark:text-white">
             {t("navbar.logoutConfirm")}
           </DialogTitle>
         </DialogHeader>

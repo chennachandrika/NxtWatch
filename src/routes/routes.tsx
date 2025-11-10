@@ -1,12 +1,22 @@
+import { lazy, Suspense } from 'react'
 import { Navigate } from 'react-router-dom'
 import type { ReactElement } from 'react'
-import Login from '../components/auth/Login'
-import HomePage from '../pages/HomePage'
-import TrendingPage from '../pages/TrendingPage'
-import GamingPage from '../pages/GamingPage'
-import SavedVideosPage from '../pages/SavedVideosPage'
-import VideoDetailsPage from '../pages/VideoDetailsPage'
 import RouteGuard from '../components/routes/RouteGuard'
+
+// Lazy load pages for code splitting
+const Login = lazy(() => import('../components/auth/Login'))
+const HomePage = lazy(() => import('../pages/HomePage'))
+const TrendingPage = lazy(() => import('../pages/TrendingPage'))
+const GamingPage = lazy(() => import('../pages/GamingPage'))
+const SavedVideosPage = lazy(() => import('../pages/SavedVideosPage'))
+const VideoDetailsPage = lazy(() => import('../pages/VideoDetailsPage'))
+
+// Loading fallback component
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+  </div>
+)
 
 export interface AppRoute {
   path: string
@@ -51,11 +61,13 @@ export const appRoutes: AppRoute[] = [
   },
 ]
 
-// Helper function to wrap routes with RouteGuard
+// Helper function to wrap routes with RouteGuard and Suspense
 export const renderRoute = (route: AppRoute) => {
   return (
     <RouteGuard protected={route.protected}>
-      {route.element}
+      <Suspense fallback={<PageLoader />}>
+        {route.element}
+      </Suspense>
     </RouteGuard>
   )
 }

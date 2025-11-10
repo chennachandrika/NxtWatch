@@ -77,13 +77,15 @@ const Sidebar = observer(({ isOpen, onClose }: SidebarProps) => {
             <button
               key={item.id}
               onClick={() => handleNavigation(item.path)}
-              className={`w-full flex outline-none items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+              className={`w-full flex outline-none items-center gap-3 px-4 py-3 rounded-lg transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                 activeItem === item.id
                   ? 'bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400'
                   : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
               }`}
+              aria-label={t(item.labelKey)}
+              aria-current={activeItem === item.id ? 'page' : undefined}
             >
-              <span className="text-xl">{item.icon}</span>
+              <span className="text-xl" aria-hidden="true">{item.icon}</span>
               <span className="font-medium">{t(item.labelKey)}</span>
             </button>
           ))}

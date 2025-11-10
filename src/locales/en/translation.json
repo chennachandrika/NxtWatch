@@ -60,6 +60,13 @@
     "dislike": "Dislike",
     "save": "Save",
     "saved": "Saved"
+  },
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "message": "We're sorry, but something unexpected happened. Please try again or go back to the home page.",
+    "retry": "Try Again",
+    "goHome": "Go Home",
+    "errorDetails": "Error Details"
   }
 }
 

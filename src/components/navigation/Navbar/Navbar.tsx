@@ -67,16 +67,17 @@ const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
 
             <button
               onClick={themeModel.toggleTheme}
-              className="p-2 rounded-lg outline-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label="Toggle theme"
+              className="p-2 rounded-lg outline-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              aria-label={themeModel.theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
             >
-              {themeModel.theme === "dark" ? "☀️" : "🌙"}
+              <span aria-hidden="true">{themeModel.theme === "dark" ? "☀️" : "🌙"}</span>
             </button>
 
             {/* Logout Button */}
             <button
               onClick={handleLogoutClick}
-              className="px-2 md:px-4 outline-none py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+              className="px-2 md:px-4 outline-none py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              aria-label={t("navbar.logout")}
             >
               {t("navbar.logout")}
             </button>

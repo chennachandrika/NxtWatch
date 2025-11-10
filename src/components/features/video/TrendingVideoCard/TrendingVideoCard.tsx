@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Video } from '../../../../stores/VideoModel'
 import { formatRelativeTime } from '../../../../utils/dateUtils'
@@ -6,15 +7,29 @@ interface TrendingVideoCardProps {
   video: Video
 }
 
-const TrendingVideoCard = ({ video }: TrendingVideoCardProps) => {
+const TrendingVideoCard = memo(({ video }: TrendingVideoCardProps) => {
   const navigate = useNavigate()
 
   const handleClick = () => {
     navigate(`/videos/${video.id}`)
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleClick()
+    }
+  }
+
   return (
-    <div className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors mb-4 p-2" onClick={handleClick}>
+    <div
+      className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors mb-4 p-2 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 outline-none"
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label={`${video.title} by ${video.channel.name}`}
+    >
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
         {/* Thumbnail - Top on mobile, Left on desktop */}
         <div className="shrink-0 w-full sm:w-84">
@@ -23,6 +38,7 @@ const TrendingVideoCard = ({ video }: TrendingVideoCardProps) => {
               src={video.thumbnail_url}
               alt={video.title}
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
         </div>
@@ -37,14 +53,16 @@ const TrendingVideoCard = ({ video }: TrendingVideoCardProps) => {
           </p>
           <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
             <span>{video.view_count} views</span>
-            <span>•</span>
+            <span aria-hidden="true">•</span>
             <span>{formatRelativeTime(video.published_at)}</span>
           </div>
         </div>
       </div>
     </div>
   )
-}
+})
+
+TrendingVideoCard.displayName = 'TrendingVideoCard'
 
 export default TrendingVideoCard
 
