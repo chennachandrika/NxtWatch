@@ -58,7 +58,7 @@ const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
           <div className="flex items-center gap-4">
             <button
               onClick={themeModel.toggleTheme}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-2 rounded-lg outline-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label="Toggle theme"
             >
               {themeModel.theme === "dark" ? "☀️" : "🌙"}
@@ -67,7 +67,7 @@ const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
             {/* Logout Button */}
             <button
               onClick={handleLogoutClick}
-              className="px-2 md:px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+              className="px-2 md:px-4 outline-none py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
             >
               Logout
             </button>
