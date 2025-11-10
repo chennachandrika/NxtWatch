@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import type { Video } from '../../stores/VideoModel'
-import { formatDate } from '../../utils/dateUtils'
+import {  formatRelativeTime } from '../../utils/dateUtils'
 
 interface VideoCardProps {
   video: Video
@@ -38,7 +38,7 @@ const VideoCard = ({ video }: VideoCardProps) => {
           <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
             <span>{video.view_count} views</span>
             <span>•</span>
-            <span>{formatDate(video.published_at)}</span>
+            <span>{formatRelativeTime(video.published_at)}</span>
           </div>
         </div>
       </div>

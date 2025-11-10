@@ -15,7 +15,7 @@ const GamingVideoCard = ({ video }: GamingVideoCardProps) => {
   return (
     <div className="cursor-pointer hover:scale-[1.02] transition-transform" onClick={handleClick}>
       {/* Taller aspect ratio for gaming videos */}
-      <div className="relative w-full aspect-[9/12] mb-3 rounded-lg overflow-hidden">
+      <div className="relative w-full aspect-[9/10] md:aspect-[9/12] mb-3 rounded-lg overflow-hidden">
         <img
           src={video.thumbnail_url}
           alt={video.title}
