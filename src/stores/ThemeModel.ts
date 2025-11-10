@@ -17,8 +17,8 @@ class ThemeStore {
 
   toggleTheme = () => {
     this.theme = this.theme === 'light' ? 'dark' : 'light'
-    this.applyTheme(this.theme)
     localStorage.setItem('theme', this.theme)
+    this.applyTheme(this.theme)
   }
 
   setTheme = (theme: Theme) => {
@@ -28,7 +28,14 @@ class ThemeStore {
   }
 
   private applyTheme = (theme: Theme) => {
-    document.documentElement.classList.toggle('dark', theme === 'dark')
+    const html = document.documentElement
+    if (theme === 'dark') {
+      html.classList.add('dark')
+    } else {
+      html.classList.remove('dark')
+    }
+    // Force a reflow to ensure the change is applied
+    void html.offsetHeight
   }
 }
 

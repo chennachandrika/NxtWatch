@@ -4,7 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class', // Enable class-based dark mode
+  // In Tailwind v4, darkMode is enabled by default with class strategy
   theme: {
     extend: {
      

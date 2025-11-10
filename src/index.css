@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
@@ -12,26 +13,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  @layer base {
-    html {
-      @apply bg-white text-black;
-    }
-    html.dark {
-      @apply bg-black text-white;
-    }
-  }
-
   body {
     margin: 0;
     min-width: 320px;
     min-height: 100vh;
-    background-color: inherit;
-    color: black;
-    transition: color 0.3s ease;
-  }
-
-  html.dark body {
-    color: white;
+    transition: color 0.3s ease, background-color 0.3s ease;
   }
 
   h1 {
