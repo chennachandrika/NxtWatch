@@ -3,6 +3,7 @@ import Login from '../components/Login/Login'
 import HomePage from '../pages/HomePage'
 import TrendingPage from '../pages/TrendingPage'
 import GamingPage from '../pages/GamingPage'
+import VideoDetailsPage from '../pages/VideoDetailsPage'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute'
 
 export const appRoutes = [
@@ -31,6 +32,14 @@ export const appRoutes = [
     element: (
       <ProtectedRoute>
         <GamingPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/videos/:id',
+    element: (
+      <ProtectedRoute>
+        <VideoDetailsPage />
       </ProtectedRoute>
     ),
   },

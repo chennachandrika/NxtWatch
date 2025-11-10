@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import type { Video } from '../../stores/VideoModel'
 import { formatRelativeTime } from '../../utils/dateUtils'
 
@@ -6,8 +7,14 @@ interface TrendingVideoCardProps {
 }
 
 const TrendingVideoCard = ({ video }: TrendingVideoCardProps) => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/videos/${video.id}`)
+  }
+
   return (
-    <div className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors mb-4">
+    <div className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors mb-4" onClick={handleClick}>
       <div className="flex gap-4">
         {/* Thumbnail - Left Side */}
         <div className="flex-shrink-0">

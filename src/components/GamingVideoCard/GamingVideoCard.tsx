@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import type { GamingVideo } from '../../stores/GamingModel'
 
 interface GamingVideoCardProps {
@@ -5,8 +6,14 @@ interface GamingVideoCardProps {
 }
 
 const GamingVideoCard = ({ video }: GamingVideoCardProps) => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/videos/${video.id}`)
+  }
+
   return (
-    <div className="cursor-pointer hover:scale-[1.02] transition-transform">
+    <div className="cursor-pointer hover:scale-[1.02] transition-transform" onClick={handleClick}>
       {/* Taller aspect ratio for gaming videos */}
       <div className="relative w-full aspect-[9/12] mb-3 rounded-lg overflow-hidden">
         <img

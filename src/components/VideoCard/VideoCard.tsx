@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import type { Video } from '../../stores/VideoModel'
 import { formatDate } from '../../utils/dateUtils'
 
@@ -6,8 +7,14 @@ interface VideoCardProps {
 }
 
 const VideoCard = ({ video }: VideoCardProps) => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate(`/videos/${video.id}`)
+  }
+
   return (
-    <div className="cursor-pointer hover:scale-[1.02] transition-transform">
+    <div className="cursor-pointer hover:scale-[1.02] transition-transform" onClick={handleClick}>
       <div className="relative w-full aspect-video mb-3 rounded-lg overflow-hidden">
         <img
           src={video.thumbnail_url}
