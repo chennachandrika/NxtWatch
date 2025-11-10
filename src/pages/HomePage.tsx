@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
-import AppLayout from '../components/Layouts/AppLayout'
-import SearchBar from '../components/SearchBar/SearchBar'
-import VideoList from '../components/VideoList/VideoList'
+import AppLayout from '../components/layouts/AppLayout'
+import SearchBar from '../components/features/search/SearchBar'
+import VideoList from '../components/features/video/VideoList'
 import videoModel from '../stores/VideoModel'
 
 const HomePage = observer(() => {

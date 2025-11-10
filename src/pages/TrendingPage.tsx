@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
-import AppLayout from '../components/Layouts/AppLayout'
-import VideoList from '../components/VideoList/VideoList'
+import AppLayout from '../components/layouts/AppLayout'
+import VideoList from '../components/features/video/VideoList'
 import trendingModel from '../stores/TrendingModel'
 
 const TrendingPage = observer(() => {

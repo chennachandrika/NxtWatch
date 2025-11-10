@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
-import AppLayout from '../components/Layouts/AppLayout'
-import VideoList from '../components/VideoList/VideoList'
+import AppLayout from '../components/layouts/AppLayout'
+import VideoList from '../components/features/video/VideoList'
 import savedVideosModel from '../stores/SavedVideosModel'
 
 const SavedVideosPage = observer(() => {
