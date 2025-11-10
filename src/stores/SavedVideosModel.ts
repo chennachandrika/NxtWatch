@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable, computed, reaction } from 'mobx'
 import type { Video } from './VideoModel'
 import type { VideoDetails } from './VideoDetailsModel'
 
@@ -6,8 +6,19 @@ class SavedVideosModel {
   savedVideos: Video[] = []
 
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this, {
+      // Mark computed values
+      savedVideoCount: computed,
+      savedVideoIds: computed,
+      isEmpty: computed,
+    })
     this.loadSavedVideos()
+    
+    // Reaction: Auto-persist to localStorage when savedVideos changes
+    reaction(
+      () => this.savedVideos.length,
+      () => this.persistSavedVideos()
+    )
   }
 
   loadSavedVideos = () => {
@@ -21,6 +32,21 @@ class SavedVideosModel {
         localStorage.removeItem('saved_videos')
       }
     }
+  }
+
+  // Computed: Get count of saved videos
+  get savedVideoCount(): number {
+    return this.savedVideos.length
+  }
+
+  // Computed: Get array of saved video IDs (for quick lookup)
+  get savedVideoIds(): string[] {
+    return this.savedVideos.map((video) => video.id)
+  }
+
+  // Computed: Check if no videos saved
+  get isEmpty(): boolean {
+    return this.savedVideos.length === 0
   }
 
   saveVideo = (videoDetails: VideoDetails) => {
@@ -39,22 +65,19 @@ class SavedVideosModel {
 
     // Check if video is already saved
     if (!this.isVideoSaved(video.id)) {
-      runInAction(() => {
-        this.savedVideos = [...this.savedVideos, video]
-        this.persistSavedVideos()
-      })
+      this.savedVideos = [...this.savedVideos, video]
+      // Persistence handled by reaction
     }
   }
 
   removeVideo = (videoId: string) => {
-    runInAction(() => {
-      this.savedVideos = this.savedVideos.filter((video) => video.id !== videoId)
-      this.persistSavedVideos()
-    })
+    this.savedVideos = this.savedVideos.filter((video) => video.id !== videoId)
+    // Persistence handled by reaction
   }
 
   isVideoSaved = (videoId: string): boolean => {
-    return this.savedVideos.some((video) => video.id === videoId)
+    // Use computed savedVideoIds for O(1) lookup instead of O(n) some()
+    return this.savedVideoIds.includes(videoId)
   }
 
   private persistSavedVideos = () => {
@@ -62,10 +85,8 @@ class SavedVideosModel {
   }
 
   clearAllSavedVideos = () => {
-    runInAction(() => {
-      this.savedVideos = []
-      localStorage.removeItem('saved_videos')
-    })
+    this.savedVideos = []
+    localStorage.removeItem('saved_videos')
   }
 }
 

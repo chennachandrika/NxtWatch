@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable, flow, computed } from 'mobx'
 import { fetchVideoDetailsAPI } from '../services/api'
 
 export type VideoDetails = {
@@ -23,10 +23,26 @@ class VideoDetailsModel {
   private isFetching: boolean = false
 
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this, {
+      // Mark computed and flow
+      hasVideoDetails: computed,
+      currentVideoId: computed,
+      fetchVideoDetails: flow,
+    })
   }
 
-  fetchVideoDetails = async (videoId: string) => {
+  // Computed: Check if video details exist
+  get hasVideoDetails(): boolean {
+    return this.videoDetails !== null
+  }
+
+  // Computed: Get current video ID
+  get currentVideoId(): string | null {
+    return this.videoDetails?.id || null
+  }
+
+  // Flow: Better async handling
+  fetchVideoDetails = flow(function* (this: VideoDetailsModel, videoId: string) {
     // Prevent duplicate concurrent requests
     if (this.isFetching) {
       return
@@ -37,23 +53,19 @@ class VideoDetailsModel {
     this.errorMessage = ''
 
     try {
-      const data = await fetchVideoDetailsAPI(videoId)
-      runInAction(() => {
-        this.videoDetails = data.video_details || null
-        this.isLoading = false
-        this.isFetching = false
-      })
+      const data = yield fetchVideoDetailsAPI(videoId)
+      this.videoDetails = data.video_details || null
+      this.isLoading = false
+      this.isFetching = false
     } catch (error) {
-      runInAction(() => {
-        this.errorMessage = error instanceof Error 
-          ? error.message 
-          : 'Failed to fetch video details'
-        this.isLoading = false
-        this.videoDetails = null
-        this.isFetching = false
-      })
+      this.errorMessage = error instanceof Error 
+        ? error.message 
+        : 'Failed to fetch video details'
+      this.isLoading = false
+      this.videoDetails = null
+      this.isFetching = false
     }
-  }
+  })
 
   clearError = () => {
     this.errorMessage = ''

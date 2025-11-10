@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable, flow, computed } from 'mobx'
 import { loginAPI } from '../services/api'
 import userModel from './UserModel'
 
@@ -14,8 +14,23 @@ class AuthModel{
   jwtToken: string = ''
 
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this, {
+      // Mark computed and flow
+      isLoggedIn: computed,
+      hasToken: computed,
+      login: flow,
+    })
     this.checkAuthStatus()
+  }
+
+  // Computed: Alias for isAuthenticated (more semantic)
+  get isLoggedIn(): boolean {
+    return this.isAuthenticated
+  }
+
+  // Computed: Check if token exists
+  get hasToken(): boolean {
+    return this.jwtToken.length > 0
   }
 
   checkAuthStatus = () => {
@@ -28,36 +43,34 @@ class AuthModel{
     }
   }
 
-  login = async (credentials: LoginCredentials) => {
+  // Flow: Better async handling
+  login = flow(function* (this: AuthModel, credentials: LoginCredentials) {
     this.isLoading = true
     this.errorMessage = ''
 
     try {
-      const data = await loginAPI(credentials.username, credentials.password)
+      const data = yield loginAPI(credentials.username, credentials.password)
 
-      runInAction(() => {
-        this.jwtToken = data.jwt_token
-        this.isAuthenticated = true
-        this.isLoading = false
-        localStorage.setItem('jwt_token', data.jwt_token)
-        
-        // Store user info in UserModel
-        userModel.setUser({
-          username: credentials.username,
-          name: credentials.username,
-        })
+      this.jwtToken = data.jwt_token
+      this.isAuthenticated = true
+      this.isLoading = false
+      localStorage.setItem('jwt_token', data.jwt_token)
+      
+      // Store user info in UserModel
+      userModel.setUser({
+        username: credentials.username,
+        name: credentials.username,
       })
+      
       return { success: true }
     } catch (error) {
-      runInAction(() => {
-        this.errorMessage = error instanceof Error 
-          ? error.message 
-          : 'Something went wrong. Please try again.'
-        this.isLoading = false
-      })
+      this.errorMessage = error instanceof Error 
+        ? error.message 
+        : 'Something went wrong. Please try again.'
+      this.isLoading = false
       return { success: false, error: this.errorMessage }
     }
-  }
+  })
 
   logout = () => {
     this.isAuthenticated = false
