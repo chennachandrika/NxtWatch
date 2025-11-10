@@ -1,14 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { observer } from 'mobx-react-lite'
 import type { VideoDetails } from '../../stores/VideoDetailsModel'
+import savedVideosModel from '../../stores/SavedVideosModel'
 
 interface VideoDetailsContentProps {
   video: VideoDetails
 }
 
-const VideoDetailsContent = ({ video }: VideoDetailsContentProps) => {
+const VideoDetailsContent = observer(({ video }: VideoDetailsContentProps) => {
   const [isLiked, setIsLiked] = useState(false)
   const [isDisliked, setIsDisliked] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
+
+  useEffect(() => {
+    setIsSaved(savedVideosModel.isVideoSaved(video.id))
+  }, [video.id])
 
   const handleLike = () => {
     setIsLiked(!isLiked)
@@ -21,7 +27,13 @@ const VideoDetailsContent = ({ video }: VideoDetailsContentProps) => {
   }
 
   const handleSave = () => {
-    setIsSaved(!isSaved)
+    if (isSaved) {
+      savedVideosModel.removeVideo(video.id)
+      setIsSaved(false)
+    } else {
+      savedVideosModel.saveVideo(video)
+      setIsSaved(true)
+    }
   }
 
   return (
@@ -70,8 +82,8 @@ const VideoDetailsContent = ({ video }: VideoDetailsContentProps) => {
                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
             }`}
           >
-            <span>➕</span>
-            <span>Save</span>
+            <span>{isSaved ? '✓' : '➕'}</span>
+            <span>{isSaved ? 'Saved' : 'Save'}</span>
           </button>
         </div>
       </div>
@@ -97,6 +109,6 @@ const VideoDetailsContent = ({ video }: VideoDetailsContentProps) => {
       </div>
     </div>
   )
-}
+})
 
 export default VideoDetailsContent
