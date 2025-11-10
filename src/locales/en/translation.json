@@ -1,0 +1,62 @@
+{
+  "common": {
+    "logout": "Logout",
+    "login": "Login",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "noResults": "No results found",
+    "save": "Save",
+    "saved": "Saved",
+    "views": "views",
+    "subscribers": "subscribers",
+    "published": "Published",
+    "description": "Description"
+  },
+  "navbar": {
+    "title": "NxtWatch",
+    "logout": "Logout",
+    "logoutConfirm": "Are you sure you want to logout?"
+  },
+  "sidebar": {
+    "home": "Home",
+    "trending": "Trending",
+    "gaming": "Gaming",
+    "savedVideos": "Saved Videos"
+  },
+  "auth": {
+    "username": "Username",
+    "password": "Password",
+    "loginButton": "Login",
+    "loginError": "Invalid username or password"
+  },
+  "home": {
+    "title": "Home",
+    "searchPlaceholder": "Search videos...",
+    "noVideos": "No videos found",
+    "loadMore": "Load More"
+  },
+  "trending": {
+    "title": "Trending",
+    "noVideos": "No trending videos found"
+  },
+  "gaming": {
+    "title": "Gaming",
+    "noVideos": "No gaming videos found"
+  },
+  "savedVideos": {
+    "title": "Saved Videos",
+    "noVideos": "You haven't saved any videos yet",
+    "emptyState": "Save videos to watch them later"
+  },
+  "videoDetails": {
+    "like": "Like",
+    "dislike": "Dislike",
+    "save": "Save",
+    "saved": "Saved"
+  }
+}
+

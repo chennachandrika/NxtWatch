@@ -1,0 +1,62 @@
+{
+  "common": {
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "search": "Rechercher",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "noResults": "Aucun résultat trouvé",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "views": "vues",
+    "subscribers": "abonnés",
+    "published": "Publié",
+    "description": "Description"
+  },
+  "navbar": {
+    "title": "NxtWatch",
+    "logout": "Déconnexion",
+    "logoutConfirm": "Êtes-vous sûr de vouloir vous déconnecter?"
+  },
+  "sidebar": {
+    "home": "Accueil",
+    "trending": "Tendances",
+    "gaming": "Jeux",
+    "savedVideos": "Vidéos enregistrées"
+  },
+  "auth": {
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "loginButton": "Se connecter",
+    "loginError": "Nom d'utilisateur ou mot de passe invalide"
+  },
+  "home": {
+    "title": "Accueil",
+    "searchPlaceholder": "Rechercher des vidéos...",
+    "noVideos": "Aucune vidéo trouvée",
+    "loadMore": "Charger plus"
+  },
+  "trending": {
+    "title": "Tendances",
+    "noVideos": "Aucune vidéo tendance trouvée"
+  },
+  "gaming": {
+    "title": "Jeux",
+    "noVideos": "Aucune vidéo de jeu trouvée"
+  },
+  "savedVideos": {
+    "title": "Vidéos enregistrées",
+    "noVideos": "Vous n'avez pas encore enregistré de vidéos",
+    "emptyState": "Enregistrez des vidéos pour les regarder plus tard"
+  },
+  "videoDetails": {
+    "like": "J'aime",
+    "dislike": "Je n'aime pas",
+    "save": "Enregistrer",
+    "saved": "Enregistré"
+  }
+}
+

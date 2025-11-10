@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 interface SidebarItem {
   id: string
-  label: string
+  labelKey: string
   icon: string
   path: string
 }
@@ -14,15 +15,16 @@ interface SidebarProps {
 }
 
 const sidebarItems: SidebarItem[] = [
-  { id: 'home', label: 'Home', icon: '🏠', path: '/' },
-  { id: 'trending', label: 'Trending', icon: '🔥', path: '/trending' },
-  { id: 'gaming', label: 'Gaming', icon: '🎮', path: '/gaming' },
-  { id: 'saved', label: 'Saved videos', icon: '💾', path: '/saved' },
+  { id: 'home', labelKey: 'sidebar.home', icon: '🏠', path: '/' },
+  { id: 'trending', labelKey: 'sidebar.trending', icon: '🔥', path: '/trending' },
+  { id: 'gaming', labelKey: 'sidebar.gaming', icon: '🎮', path: '/gaming' },
+  { id: 'saved', labelKey: 'sidebar.savedVideos', icon: '💾', path: '/saved' },
 ]
 
 const Sidebar = observer(({ isOpen, onClose }: SidebarProps) => {
   const navigate = useNavigate()
   const location = useLocation()
+  const { t } = useTranslation()
   const activeItem = sidebarItems.find(item => item.path === location.pathname)?.id || 'home'
 
   const handleNavigation = (path: string) => {
@@ -82,7 +84,7 @@ const Sidebar = observer(({ isOpen, onClose }: SidebarProps) => {
               }`}
             >
               <span className="text-xl">{item.icon}</span>
-              <span className="font-medium">{item.label}</span>
+              <span className="font-medium">{t(item.labelKey)}</span>
             </button>
           ))}
         </nav>

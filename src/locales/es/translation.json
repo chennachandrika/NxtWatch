@@ -1,0 +1,62 @@
+{
+  "common": {
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "search": "Buscar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Reintentar",
+    "noResults": "No se encontraron resultados",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "views": "visualizaciones",
+    "subscribers": "suscriptores",
+    "published": "Publicado",
+    "description": "Descripción"
+  },
+  "navbar": {
+    "title": "NxtWatch",
+    "logout": "Cerrar sesión",
+    "logoutConfirm": "¿Estás seguro de que quieres cerrar sesión?"
+  },
+  "sidebar": {
+    "home": "Inicio",
+    "trending": "Tendencias",
+    "gaming": "Juegos",
+    "savedVideos": "Videos guardados"
+  },
+  "auth": {
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "loginButton": "Iniciar sesión",
+    "loginError": "Nombre de usuario o contraseña inválidos"
+  },
+  "home": {
+    "title": "Inicio",
+    "searchPlaceholder": "Buscar videos...",
+    "noVideos": "No se encontraron videos",
+    "loadMore": "Cargar más"
+  },
+  "trending": {
+    "title": "Tendencias",
+    "noVideos": "No se encontraron videos de tendencias"
+  },
+  "gaming": {
+    "title": "Juegos",
+    "noVideos": "No se encontraron videos de juegos"
+  },
+  "savedVideos": {
+    "title": "Videos guardados",
+    "noVideos": "Aún no has guardado ningún video",
+    "emptyState": "Guarda videos para verlos más tarde"
+  },
+  "videoDetails": {
+    "like": "Me gusta",
+    "dislike": "No me gusta",
+    "save": "Guardar",
+    "saved": "Guardado"
+  }
+}
+

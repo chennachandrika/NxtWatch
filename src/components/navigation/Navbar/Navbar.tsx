@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import authModel from "../../../stores/AuthModel";
 import userModel from "../../../stores/UserModel";
 import themeModel from "../../../stores/ThemeModel";
 import LogoutConfirmationDialog from "../../auth/LogoutConfirmationDialog";
+import LanguageSwitcher from "../LanguageSwitcher";
 
 interface NavbarProps {
   onMenuToggle: () => void;
@@ -12,6 +14,7 @@ interface NavbarProps {
 
 const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   const handleLogout = () => {
@@ -53,13 +56,15 @@ const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
             </button>
             <Link to="/">
               <h1 className=" text-xl font-bold text-gray-800 dark:text-white">
-                NxtWatch
+                {t("navbar.title")}
               </h1>
             </Link>
           </div>
 
           {/* Actions */}
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+
             <button
               onClick={themeModel.toggleTheme}
               className="p-2 rounded-lg outline-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -73,7 +78,7 @@ const Navbar = observer(({ onMenuToggle }: NavbarProps) => {
               onClick={handleLogoutClick}
               className="px-2 md:px-4 outline-none py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
             >
-              Logout
+              {t("navbar.logout")}
             </button>
 
             {/* User Profile - At the end */}
